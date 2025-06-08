@@ -1,11 +1,14 @@
 package com.evvyoumbi.customer;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Dans cette classe nous allons faire toutes les opération liées aux clients.
  * L'accès à la base de données, les validations, etc. seront gérés ici.
  */
 
-public record CustomerService() {
+@Service
+public record CustomerService(CustomerRepository customerRepository) {
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -15,7 +18,9 @@ public record CustomerService() {
                 .build();
         //todo: check if email is valid
         //todo: ckeck if email is not taken
-        //todo: store customer in db
+
+
+        customerRepository.save(customer); // Enregistrer le client dans la base de données
 
     }
 }
